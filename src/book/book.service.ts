@@ -4,21 +4,29 @@ import { Book } from './interfaces/book.interface'
 
 @Injectable()
 export class BookService {
-  private book: Book[] = [];
+  private books: Book[] = [];
+  private nextId=1;
 
   ListBook(): Book[] {
-    return this.book;
+    return this.books;
   }
 
   DetailBook(id: number): Book[] {
-    return this.book.filter((book: Book) => {
+    return this.books.filter((book: Book) => {
       return Number(book.id) === id;
     });
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  AddBook() {
+  ProposeBook(bookData: Book) {
+    const newBook = {
+      id: this.nextId,
+      ...bookData,
+    };
+    this.nextId++
 
+    this.books.push(newBook);
+    return newBook;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
