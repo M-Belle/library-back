@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Get, Param, Post, UsePipes, ValidationPipe } from "@nestjs/common";
 import { BookService } from './book.service';
-import { Book } from './interfaces/book.interface';
 import { ProposeBookDto } from "./dto/propose-book.dto";
 //import { AuthGuard } from "@nestjs/passport";
 
@@ -15,14 +14,14 @@ export class BookController {
   }
 
   @Get('/books/:id')
-  DetailBook (@Param('id') idBook: string): Book[] {
+  DetailBook (@Param('id') idBook: string) {
     return this.bookService.DetailBook(Number(idBook));
   }
 
   //@UseGuards(AuthGuard())
   @UsePipes(new ValidationPipe())
   @Post('/books/propose')
-  ProposeBook(@Body() bookData: ProposeBookDto) {
+  ProposeBook(@Body() bookData: Omit<ProposeBookDto,'id'>) {
     return this.bookService.ProposeBook(bookData);
   }
 }

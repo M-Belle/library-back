@@ -1,18 +1,23 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Get, Param, Post, Put, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  UsePipes,
+  ValidationPipe
+} from "@nestjs/common";
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ConnectUserDto } from "./dto/connect-user.dto";
-import { AuthGuard } from "@nestjs/passport";
+//import { AuthGuard } from "@nestjs/passport";
 
 @Controller()
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
-
-  @Get('/users')
-  GetUser() {
-    return this.usersService.GetUser();
-  }
 
   @UsePipes(new ValidationPipe())
   @Post('/users')
@@ -26,10 +31,21 @@ export class UsersController {
     return this.usersService.Connection(userInfo);
   }
 
+  @Get('/users/:id')
+  GetUser(@Param() userId: string) {
+    return this.usersService.GetUser(Number(userId));
+  }
+
   @UsePipes(new ValidationPipe())
   //@UseGuards(AuthGuard())
-  @Put('/users/:mail')
-  ChangePassword(@Param('mail') mail: string, @Body('password') password: string) {
+  @Put('/users')
+  ChangePassword(@Body('mail') mail: string, @Body('password') password: string) {
     return this.usersService.ChangePassword(mail, password);
   }
+
+  @Delete('/users/:id')
+  DeleteUser(@Param() userId: string) {
+    return this.usersService.DeleteUser(Number(userId));
+  }
+
 }
