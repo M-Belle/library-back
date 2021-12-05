@@ -1,14 +1,20 @@
 /* eslint-disable prettier/prettier */
-import { IsNumber, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 export class ProposeBookDto {
-  id: number;
   @IsString()
-  genre: string;
-  @IsString()
+  @IsNotEmpty()
   title: string;
+
   @IsString()
+  @IsNotEmpty()
   author:string;
+
+  @IsString()
+  @IsNotEmpty()
+  genre: string;
+
   @IsNumber()
+  @IsNotEmpty()
   year:number;
 }

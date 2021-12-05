@@ -2,29 +2,36 @@
 import { Injectable } from '@nestjs/common';
 import { ProposeBookDto } from "./dto/propose-book.dto";
 
+//import MortsurleNil from "../pictures/Mort-sur-le-Nil.jpg";
+//import JurassicPark from "../pictures/jurassic-park.jpg"
+//import SeigneurdesAnneauxT1 from "../pictures/Le-seigneur-des-anneaux-t1.jpg"
+
 @Injectable()
 export class BookService {
-  private books = [
+   books = [
     {
       id: 1,
-      genre: "Policier",
       title: "Mort sur le Nil",
       author: "Agatha Christie",
-      year: 1937
+      genre: "Policier",
+      year: 1937,
+      //image: MortsurleNil
     },
     {
       id: 2,
-      genre: "Science-Fiction",
       title: "Jurassic Park",
       author: "Michael Crichton",
-      year: 1990
+      genre: "Science-Fiction",
+      year: 1990,
+      //image: JurassicPark
     },
     {
       id: 3,
-      genre: "Fantastique",
       title: "Le Seigneur des anneaux (Tome 1) - La fraternité de l'anneau",
       author: "J. R. R. Tolkien",
-      year: 1954
+      genre: "Fantastique",
+      year: 1954,
+      //image: SeigneurdesAnneauxT1
     }
   ];
   private nextId=4;
@@ -39,7 +46,7 @@ export class BookService {
     });
   }
 
-  ProposeBook(bookData: Omit<ProposeBookDto, "id">) {
+  ProposeBook(bookData: ProposeBookDto) {
     const newBook = {
       id: this.nextId,
       ...bookData,

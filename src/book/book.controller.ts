@@ -18,10 +18,9 @@ export class BookController {
     return this.bookService.DetailBook(Number(idBook));
   }
 
-  //@UseGuards(AuthGuard())
   @UsePipes(new ValidationPipe())
   @Post('/books/propose')
-  ProposeBook(@Body() bookData: Omit<ProposeBookDto,'id'>) {
+  ProposeBook(@Body() bookData: ProposeBookDto) {
     return this.bookService.ProposeBook(bookData);
   }
 }
