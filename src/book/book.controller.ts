@@ -18,6 +18,11 @@ export class BookController {
     return this.bookService.DetailBook(Number(idBook));
   }
 
+  @Get('/books/:genre')
+  SortBook(@Param('genre') genreBook: string) {
+    return this.bookService.SortBook(genreBook);
+  }
+
   @UsePipes(new ValidationPipe())
   @Post('/books/propose')
   ProposeBook(@Body() bookData: ProposeBookDto) {

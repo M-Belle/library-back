@@ -13,7 +13,7 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ConnectUserDto } from "./dto/connect-user.dto";
-//import { AuthGuard } from "@nestjs/passport";
+import { UpdateUserDto } from "./dto/update-user.dto";
 
 @Controller()
 export class UsersController {
@@ -26,24 +26,24 @@ export class UsersController {
   }
 
   @UsePipes(new ValidationPipe())
-  @Post('/users/auth')
-  Connection(@Body() userInfo: ConnectUserDto): string {
+  @Post('/user/auth')
+  Connection(@Body() userInfo: ConnectUserDto) {
     return this.usersService.Connection(userInfo);
   }
 
-  @Get('/users/:id')
-  GetUser(@Param() userId: string) {
-    return this.usersService.GetUser(Number(userId));
+  @Get('/user/:id')
+  GetUser(@Param('id') idUser:string) {
+    return this.usersService.GetUser(Number(idUser));
   }
 
   @UsePipes(new ValidationPipe())
   //@UseGuards(AuthGuard())
-  @Put('/users')
-  ChangePassword(@Body('mail') mail: string, @Body('password') password: string) {
-    return this.usersService.ChangePassword(mail, password);
+  @Put('/user/:id')
+  UpdateInfo(@Param('id') id:string, @Body() updateInfo: UpdateUserDto) {
+    return this.usersService.UpdateInfo(Number(id), updateInfo);
   }
 
-  @Delete('/users/:id')
+  @Delete('/user/:id')
   DeleteUser(@Param() userId: string) {
     return this.usersService.DeleteUser(Number(userId));
   }

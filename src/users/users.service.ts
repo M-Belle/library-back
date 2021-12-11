@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
-import { User } from "./interfaces/user.interface";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { CreateUserDto } from "./dto/create-user.dto";
 
 @Injectable()
 export class UsersService {
@@ -8,61 +8,73 @@ export class UsersService {
     {
       id: 1,
       name: "maxence",
-      mail: "maxence.belle@estiam.com",
-      password: "max71996"
+      email: "maxence.belle@estiam.com",
+      password: "max71996",
+      token: ""
     },
   ];
   private nextId=2;
 
-  CreateUser(userdata: User) {
+  CreateUser(userdata: CreateUserDto) {
     const newUser = {
       id: this.nextId,
-      ...userdata
+      ...userdata,
+      token: "",
     };
+
+    if(this.users.find((users) => { return users.email === userdata.email })) {
+      throw new HttpException('L\'utilisateur existe déjà', HttpStatus.FORBIDDEN);
+    }
+
     this.users.push(newUser);
     this.nextId++
     return "Création de l'utilisateur réussie";
   }
 
-  Connection(userInfo: any): string {
+  Connection(userInfo: any) {
     const { email, password } = userInfo;
     const userFound = this.users.find((user) => {
-      return user.mail === email && user.password === password;
+      return user.email === email && user.password === password;
     });
+
     if (!userFound) {
-      throw new ForbiddenException();
+      throw new HttpException('Email ou Mot de passe incorrect', HttpStatus.NOT_FOUND);
     }
-    return Buffer.from(`${email}/${password}`).toString('base64');
+
+    userFound.token = Buffer.from(`${email}/${password}`).toString('base64');
+    return userFound;
   }
 
-  GetUser(userId: number): User[] {
-    const user = this.users.filter((users) => {
-      return Number(users.id) === userId;
+  GetUser(id: number) {
+    return this.users.filter((users) => {
+      return Number(users.id) === id;
     });
-    if (!user) {
-      throw new NotFoundException('L\'utilisateur n\'existe pas!');
-    }
-    return user;
   }
 
-  ChangePassword(mail: string, password: string) {
+  UpdateInfo(id: number, updateInfo) {
     const userInfo = this.users.find((user) => {
-      return user.mail === mail;
+      return Number(user.id) === id;
     });
-    userInfo.password = password;
 
-    if (!userInfo) {
-      throw new ForbiddenException();
+    if(userInfo.name != updateInfo.name) {
+      userInfo.name = updateInfo.name
     }
-    return "Changement de mot de passe effectué";
+
+    if(userInfo.email != updateInfo.email) {
+      userInfo.email = updateInfo.email
+    }
+
+    return "Changement effectué";
   }
 
   DeleteUser(userId: number) {
     const index = this.users.map(user => user.id).indexOf(userId);
     this.users.splice(index,1);
-    if (!index) {
-      throw new NotFoundException('L\'utilisateur n\'existe pas!');
+
+    if(!index) {
+      throw new HttpException('L\'utilisateur est déjà supprimé', HttpStatus.NOT_FOUND);
     }
+
     return "Utilisateur supprimé avec succès";
   }
 }

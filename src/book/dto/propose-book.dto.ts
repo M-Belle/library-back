@@ -17,4 +17,7 @@ export class ProposeBookDto {
   @IsNumber()
   @IsNotEmpty()
   year:number;
+
+  @IsNotEmpty()
+  resume:string
 }
