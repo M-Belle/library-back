@@ -2,10 +2,6 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { ProposeBookDto } from "./dto/propose-book.dto";
 
-//import MortsurleNil from "../pictures/Mort-sur-le-Nil.jpg";
-//import JurassicPark from "../pictures/jurassic-park.jpg"
-//import SeigneurdesAnneauxT1 from "../pictures/Le-seigneur-des-anneaux-t1.jpg"
-
 @Injectable()
 export class BookService {
    books = [
@@ -15,7 +11,7 @@ export class BookService {
       author: "Agatha Christie",
       genre: "Policier",
       year: 1937,
-      //image: MortsurleNil
+      image: 'https://c8.alamy.com/compfr/extdnm/1930-uk-mort-sur-le-nil-couverture-de-livre-extdnm.jpg',
       resume: "La riche et séduisante Linnet Ridgeway part en Égypte en voyage de noces avec son mari, Mr Doyle. " +
               "Rejoints par des amis et Hercule Poirot, le séjour semble s'annoncer sous les meilleurs auspices. " +
               "Jusqu'au moment où Linnet est retrouvée assassinée. " +
@@ -27,7 +23,7 @@ export class BookService {
       author: "Michael Crichton",
       genre: "Science-Fiction",
       year: 1990,
-      //image: JurassicPark
+      image: 'https://www.babelio.com/couv/CVT_Jurassic-Park_5882.jpeg',
       resume: "Isla Nublar. L'armée doit venir \" faire le ménage \". " +
               "Le programme dont cette île est le théâtre avait pourtant tout du paradis scientifique : un immense complexe naturel où s'ébattent, aux yeux de tous, les plus féroces sauriens du Jurassique, génétiquement ramenés à la vie...\n" +
               "Quelques jours avant le chaos, le paléontologue Alan Grant et Ian Malcolm, mathématicien de renom, embarquent pour ce bout de terre perdu au large du Pacifique. " +
@@ -39,7 +35,7 @@ export class BookService {
       author: "J. R. R. Tolkien",
       genre: "Fantastique",
       year: 1954,
-      //image: SeigneurdesAnneauxT1
+      image: 'https://bazardelalitterature.com/wp-content/uploads/2015/03/le-seigneur-des-anneaux-tome-1-la-communautc3a9-de-lanneau-j-r-r-tolkien-pocket.jpg',
       resume: "Dans les vertes prairies du Comté, les Hobbits, ou Demi-hommes, vivaient en paix... " +
               "Jusqu'au jour fatal où l'un d'entre eux, au cours de ses voyages, entra en possession de l'Anneau Unique aux immenses pouvoirs. " +
               "Pour le reconquérir, Sauron, le seigneur Sombre, va déchaîner toutes les forces du Mal. " +

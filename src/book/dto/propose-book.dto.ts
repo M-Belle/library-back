@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsString, IsUrl } from "class-validator";
 
 export class ProposeBookDto {
   @IsString()
@@ -20,4 +20,8 @@ export class ProposeBookDto {
 
   @IsNotEmpty()
   resume:string
+
+  @IsNotEmpty()
+  @IsUrl()
+  image:string
 }

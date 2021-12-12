@@ -1,23 +1,29 @@
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
-import { Comment } from './interaces/comment.interface';
+import { Injectable } from "@nestjs/common";
+import { Comment } from './interfaces/comment.interface';
 
 @Injectable()
 export class CommentService {
-  private comments = [];
+  comments = [
+    {
+      bookId: 1,
+      rating: 4,
+      description: "Good book",
+    }
+  ];
 
-  CreateComment(commentData: Comment, idBook: number) {
+  CreateComment(commentData: Comment) {
     const newComment = {
-      bookId: idBook,
       ...commentData
     };
     this.comments.push(newComment);
-    return newComment;
+
+    return 'Commentaire ajouté'
   }
 
-  ReadComment(idBook: number) {
-    this.comments.filter((comments) => {
-      return Number(comments.bookId) === idBook;
+  ReadComment(id: number) {
+    return this.comments.filter((comments) => {
+      return Number(comments.bookId) === id;
     });
   }
 }
